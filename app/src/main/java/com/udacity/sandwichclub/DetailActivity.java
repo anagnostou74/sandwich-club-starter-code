@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
@@ -15,12 +16,22 @@ public class DetailActivity extends AppCompatActivity {
     public static final String EXTRA_POSITION = "extra_position";
     private static final int DEFAULT_POSITION = -1;
 
+    TextView mainName;
+    TextView alsoKnownAs;
+    TextView placeOfOrigin;
+    TextView description;
+    TextView ingredients;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
+        alsoKnownAs = (TextView) findViewById(R.id.also_known_tv);
+        placeOfOrigin = (TextView) findViewById(R.id.origin_tv);
+        description = (TextView) findViewById(R.id.description_tv);
         ImageView ingredientsIv = findViewById(R.id.image_iv);
+        ingredients = (TextView) findViewById(R.id.ingredients_tv);
 
         Intent intent = getIntent();
         if (intent == null) {
@@ -49,6 +60,10 @@ public class DetailActivity extends AppCompatActivity {
                 .into(ingredientsIv);
 
         setTitle(sandwich.getMainName());
+        alsoKnownAs.setText(sandwich.getAlsoKnownAs().toString().replace("[", "").replace("]", ""));
+        placeOfOrigin.setText(sandwich.getPlaceOfOrigin());
+        description.setText(sandwich.getDescription());
+        ingredients.setText(sandwich.getIngredients().toString().replace("[", "").replace("]", ""));
     }
 
     private void closeOnError() {
